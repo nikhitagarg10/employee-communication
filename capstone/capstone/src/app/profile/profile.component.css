@@ -1,0 +1,60 @@
+.btnback{
+    background-color: rgb(70,180,172);
+    color: white;
+    width: 5%;
+    box-shadow:  3px 3px 0px 0px rgba(184, 184, 184, 0.4);
+}
+.btnback:hover{
+    transform: scale(1.1);
+}
+
+.btnlogout{
+    color: white;
+    width: 8%;
+    box-shadow:  3px 3px 0px 0px rgba(184, 184, 184, 0.4);
+}
+.btnlogout:hover{
+    transform: scale(1.1);
+}
+.circle {
+    align-items: center;
+    overflow: hidden;
+    border-radius: 50%;
+    width: 280px;
+    height: 280px;
+    background-color: rgb(48, 31, 9);
+}
+.img{
+    object-fit: contain;
+    border-radius: 50%;
+    object-position: center;
+}
+.imginp{
+    display: none;
+    border: none;
+    outline: none;
+    position: absolute;
+    bottom: 0;
+    left: 60%;
+}
+.icon{
+    position: absolute;
+    font-size: 55px;
+    color: lightblue;
+    bottom: 0;
+    right: 30px;
+}
+.inp{
+    border: none;
+    outline: none;
+    width: 100%;
+    border-radius: 10px;
+}
+.updatebtn{
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    background-color: rgb(204,108,229);
+    color: white;
+    width: 80%;
+}

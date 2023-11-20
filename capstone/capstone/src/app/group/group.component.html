@@ -1,0 +1,45 @@
+<div class="container-fluid con1 p-4">
+    <div class="header d-flex justify-content-between mb-4 px-3 py-3 pt-2 pb-2">
+        <div class="d-flex align-items-center">
+            <fa-icon class="icon me-3" [icon]="faCircleUser"></fa-icon>
+            <h3 class="m-0 heading">{{groupData["group_name"]}}</h3>
+        </div>
+        <div>
+            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><fa-icon class="icon2 me-3" [icon]="faUsers"></fa-icon></button>
+            <ul class="dropdown-menu">
+                <li *ngFor="let mem of grpMem" class="d-flex">
+                    <p class="me-2 ms-2">{{mem.name}}</p>
+                    <fa-icon (click)="deleteGrpMem(mem.id)" class="icon3 me-3" [icon]="faTrash"></fa-icon>
+                </li>
+            </ul>
+            
+            <button (click)="openDialog()"><fa-icon class="icon2 me-3" [icon]="faGear"></fa-icon></button>
+        </div>
+    </div>
+    <!-- (click)="seeMemebersFunc()"  -->
+    <!-- <div *ngIf="seeMembers" style="background-color: red;" class="seeMem">
+        <p>Members</p>
+        <div class="d-flex" *ngFor="let mem of grpMem">
+            <p class="me-2">{{mem.name}}</p>
+            <p>{{mem.status}}</p>
+        </div>
+    </div> -->
+    <div class="chatContent p-1 scroll">
+        <div *ngFor="let mes of allMessages">
+            <div class="receivermes p-1 ps-3 pe-3 mb-2" *ngIf="mes.senderId===groupId">
+                <p class="text">{{mes.messageContent}}</p>
+                <!-- <small>{{mes.senderId.name}}</small> -->
+            </div>
+            <div *ngIf="mes.senderId===currentUserId" class="d-flex flex-column align-items-end">
+                <div class="sendermes p-1 ps-3 pe-3 mb-2">
+                    <p class="text">{{mes.messageContent}}</p>
+                    <!-- <small>{{mes.senderId.name}}</small> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <form class="mt-2"[formGroup]="grpChatForm" (ngSubmit)="onSubmit(grpChatForm)">
+        <input class="inp p-3 mb-1 me-3" type="text" name="text" placeholder="enter text here..." formControlName="message" required>
+        <button class="btn chatbtn m-0"type="submit"><fa-icon class="icon1" [icon]="faPaperPlane"></fa-icon></button>
+    </form>
+</div>

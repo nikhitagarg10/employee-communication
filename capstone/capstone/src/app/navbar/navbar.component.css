@@ -1,0 +1,42 @@
+.navsty{
+    background-color: rgb(70,180,172);
+    height: 80px;
+    width: 100%;
+}
+.logo{
+    max-width: 125px;
+    min-height: auto;
+    height: auto;
+    border-radius: 7px;
+}
+.search{
+    width: 40%;
+}
+.searchBar{
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+}
+.searchBar:hover{
+    cursor: pointer;
+}
+.searchbtn{
+    border: none;
+    background: none;
+    font-size: 25px;
+    color: #1e0225;
+}
+.profile{
+    font-size: 220%;
+    color: rgb(246, 247, 248);
+}
+.current{
+    font-size: 22px;
+    font-weight: 700;
+    color: rgb(4, 4, 50);
+}
+.statusicon{
+    font-size: 18px;
+    /* color: green; */
+}

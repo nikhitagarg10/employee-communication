@@ -1,0 +1,25 @@
+<div class="container d-flex justify-content-center align-items-center mt-4">
+    <div class="calenderbox d-flex ">
+        <div class="calenderbox1">
+            <full-calendar class="calender" [options]="calendarOptions"  #calendar></full-calendar>
+            <button type="button" (click)="opendialog()" class="btn mt-3 me-3 eventbtn">Add Event</button>
+        </div>
+
+        <div *ngIf="displayEvents" class="mt-3 ms-5">
+            <h1>Events on {{date}}</h1>
+            <mat-expansion-panel class="mb-2" hideToggle *ngFor="let e of filterEvents" style="width: 90%;">
+                <mat-expansion-panel-header >
+                      <mat-panel-description>{{e.title}}</mat-panel-description>
+                      <mat-panel-description>{{e.category}}</mat-panel-description>
+                      <mat-panel-description>
+                        <button (click)="deleteEvent(e.id)" class="delbtn"><fa-icon [icon]="faTrash"></fa-icon></button>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                    <p>Start-Date: {{e.start}}</p>
+                    <p>End Date: {{e.end}}</p>
+                    <p>notes: {{e.description}}</p>
+            </mat-expansion-panel>
+            <p *ngIf="filterEvents.length==0">No events on this day</p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="container mt-4">
+    <h2>Approval Requests</h2>
+    <div class="scroll">
+        <div *ngFor="let a of approvals">
+            <mat-expansion-panel class="mb-2" hideToggle>
+                <mat-expansion-panel-header >
+                      <mat-panel-description>Approval</mat-panel-description>
+                      <mat-panel-description>{{a.updateType}}</mat-panel-description>
+                      <mat-panel-description><button class="btn btntick" (click)="approveRequest(a.id)"><fa-icon class="tickicon" [icon]="faCheck"></fa-icon></button></mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>EmpId => {{a.empId}}</p>
+                <p>Updated Value Requested => {{a.newValue}}</p>
+                <p>Status => {{a.status}}</p>
+            </mat-expansion-panel>
+        </div>
+    </div>
+</div>

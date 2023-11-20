@@ -1,0 +1,120 @@
+<div class="container-fluid p-4">
+    <div class="d-flex justify-content-between  mb-3">
+        <button type="button" class="btn btnback" [routerLink]="['/dashboard/calender']">back</button>
+        <button  type="button" class="btn btn-danger btnlogout" (click)="logout()">Logout</button>
+    </div>
+    <div class="row mb-4">
+        <div class="col-3 me-5" style="position: relative;">
+            <label for="profileimg">
+                <div class="circle d-flex justify-content-center align-items-center" >
+                    <img *ngIf="imageSrc" class="img " [src]="imageSrc" alt=""/>
+                    <ng-container *ngIf="!imageSrc">
+                        <img class="img" src="assets/profile.png" alt=""/>
+                    </ng-container>
+                </div>
+                <fa-icon class="icon" [icon]="faCamera"></fa-icon>
+            </label>
+            <input #imageInput
+                id="profileimg"
+                type="file"
+                accept="image/*"
+                class="imginp"
+                (change)="processFile(imageInput)">
+        </div>
+        <div class="col-7 ms-5 d-flex justify-content-center" >
+            <table class="table table-bordered">
+                <tr>
+                    <th style="text-align: center;">Name</th>
+                    <td *ngIf="!NameUpdate" style="text-align: center;">{{empData.name}}</td>
+                    <td *ngIf="!NameUpdate"><button (click)="updateName()" class="p-2 updatebtn">update</button></td>
+
+                    <td *ngIf="NameUpdate" style="text-align: center;">
+                        <form [formGroup]="updateNameForm" (ngSubmit)="onSubmitNewVal(updateNameForm, 'name')" class="d-flex " style="background-color: rgb(239, 240, 243);" >
+                            <input class="me-5"type="text" name="updateName" formControlName="name">
+                            <button class="p-2 updatebtn" type="submit">Pending</button>
+                        </form>
+                    </td>
+
+                </tr>
+                <tr>
+                    <th style="text-align: center;">E-Mail</th>
+                    <td *ngIf="!EmailUpdate" style="text-align: center;">{{empData.email}}</td>
+                    <td *ngIf="!EmailUpdate" ><button (click)="updateEmail()" class="p-2 updatebtn">update</button></td>
+                    <td *ngIf="EmailUpdate" style="text-align: center;">
+                        <form [formGroup]="updateEmailForm" (ngSubmit)="onSubmitNewVal(updateEmailForm, 'email')" class="d-flex " style="background-color: rgb(239, 240, 243);" >
+                            <input class="me-5"type="text" name="updateEmail" formControlName="email">
+                            <button class="p-2 updatebtn" type="submit">Pending</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: center;">Phone</th>
+                    <td *ngIf="!PhoneUpdate" style="text-align: center;">{{empData.phone}}</td>
+                    <td *ngIf="!PhoneUpdate"><button (click)="updatePhone()" class="p-2 updatebtn">update</button></td>
+                    <td *ngIf="PhoneUpdate" style="text-align: center;">
+                        <form [formGroup]="updatePhoneForm" (ngSubmit)="onSubmitNewVal(updatePhoneForm, 'phone')" class="d-flex " style="background-color: rgb(239, 240, 243);" >
+                            <input class="me-5" type="number" name="updatePhone" formControlName="phone">
+                            <button class="p-2 updatebtn" type="submit">Pending</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-3 me-5 p-2" style="border: 1px solid lightgrey;">
+            <h2 style="text-align: center;">Update password</h2>
+            <div class="d-flex justify-content-center m-0">
+                <form [formGroup]="passwordForm" (ngSubmit)="onSubmit(passwordForm)">
+
+                    <small class="error" *ngIf="passwordForm.controls['oldpassword'].invalid && passwordForm.controls['oldpassword'].touched">this is a required field</small><br>
+                    <input class="inp p-3" type="text" name="email" placeholder="enter your old password" formControlName="oldpassword" required><br>
+        
+                    <small class="error" *ngIf="passwordForm.controls['newpassword'].invalid && passwordForm.controls['newpassword'].touched">this is a required field</small><br>
+                    <input class="inp p-3 mb-2" type="password" placeholder="enter your new password" formControlName="newpassword" required><br>
+        
+                    <button class="btn p-2 updatebtn" type="submit" >Update Password</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-7 ms-5 d-flex justify-content-center">
+            <table class="table table-bordered">
+                <tr>
+                    <th style="text-align: center;">Status</th>
+                    <!-- <td style="text-align: center;">
+                        <select type="text" value="{{empData.status}}">
+                            <option *ngFor="let s of statusColors" value={{s.status}}>
+                                &#f111; {{s.status}}
+                            </option>
+                        </select>
+                        <button class="p-2 updatebtn">update</button>
+                    </td> -->
+                    <td style="text-align: center;">
+                        <form [formGroup]="updateStatusForm" (ngSubmit)="onSubmitStatus(updateStatusForm)" class="d-flex " style="background-color: rgb(239, 240, 243);" >
+                            <select type="text" value="{{empData.status}}" style="width: 80%;" formControlName="status">
+                                <option *ngFor="let s of statusColors" value="{{s.status}}">
+                                    {{s.status}}
+                                </option>
+                            </select>
+                            <button class="ms-5 p-2 updatebtn">update</button>
+                        </form>
+                    </td>
+                    <td></td>
+                </tr>
+                <!-- <tr>
+                    <th style="text-align: center;">Department</th>
+                    <td style="text-align: center;">{{empData.department}}</td>
+                    <td ><button class="p-2 updatebtn">request Admin</button></td>
+                    
+                </tr>
+                <tr>
+                    <th style="text-align: center;">Role</th>
+                    <td style="text-align: center;">{{empData.role}}</td>
+                    <td><button class="p-2 updatebtn">request Admin</button></td>
+                </tr> -->
+            </table>
+        </div>
+    </div>
+</div>
+

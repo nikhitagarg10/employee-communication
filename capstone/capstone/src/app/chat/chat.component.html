@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <div class="row m-2">
+        <div class="box1 col-4 p-2">
+            <div class="box2 d-flex justify-content-around mb-3 p-3">
+                <button (click)="clickGrp()" class="btn1 p-2" [ngClass]="{'clikcbtn':groupClicked}">groups</button>
+                <button (click)="clickContact()" class="btn1 p-2" [ngClass]="{'clikcbtn':contactClicked}">contacts</button>
+            </div>
+
+            <div *ngIf="contactClicked"class="scroll">
+                <div (click)="clickToChatContact(contacts.id)" *ngFor="let contacts of allEmps">
+                    <div class="contact d-flex justify-content-start mb-3 p-3">
+                        <fa-icon class="icon me-3" [icon]="faCircleUser"></fa-icon>
+                        <div>
+                            <p class="m-0 name">{{contacts.name}}</p>
+                            <p class="m-0 email">{{contacts.email}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="groupClicked" class="d-flex flex-column align-items-end scroll">
+                <button (click)="openDialog()" class="iconbtn m-0"><fa-icon class="icon1" [icon]="faPlus" title="create new group"></fa-icon></button>
+                <div (click)="clickToChatGroup(grps.group_id)" *ngFor="let grps of allGrps" class="w-100">
+                    <div class="contact d-flex justify-content-start align-items-center p-2">
+                        <fa-icon class="icon me-3 mt-3" [icon]="faCircleUser"></fa-icon>
+                        <p class="m-0 name">{{grps.group_name}}</p>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+        <div class="col-8">
+                <div *ngIf="default">
+                    <div class="d-flex justify-content-center mt-5 mb-2">
+                        <img class="chatImg" src="assets/chat.png"/>
+                    </div>
+                    <h4 class="text mt-5">Start Conversation with your contacts</h4>
+                </div>
+                <router-outlet *ngIf="!default"></router-outlet>
+        </div>
+    </div>
+</div>

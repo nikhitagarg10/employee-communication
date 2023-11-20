@@ -1,0 +1,27 @@
+<div class="container mt-4">
+    <h1>Today's Events</h1>
+    <div *ngIf="eventToday">
+        <mat-expansion-panel class="mb-2" hideToggle *ngFor="let e of filterEvents">
+            <mat-expansion-panel-header >
+                      <mat-panel-description>{{e.title}}</mat-panel-description>
+                      <mat-panel-description>{{e.category}}</mat-panel-description>
+            </mat-expansion-panel-header>
+                <p>Start-Date: {{e.start}}</p>
+                    <p>End Date: {{e.end}}</p>
+                    <p>notes: {{e.description}}</p>
+        </mat-expansion-panel>
+    </div>
+    <div *ngIf="!eventToday">
+        <h4>No events for Today</h4>
+    </div>
+
+    <h1>Chat notifications</h1>
+    <div *ngIf="chats">
+        <mat-expansion-panel class="mb-2" hideToggle *ngFor="let e of chatArray">
+            <mat-expansion-panel-header >
+                  <mat-panel-description>{{e.notificationContent}}</mat-panel-description>
+                  <mat-panel-description>{{e.notificationTime}}</mat-panel-description>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="container-fluid main-con p-0">
+    <div class="row">
+        <app-navbar></app-navbar>
+    </div>
+    <div class="row content">
+        <div class="col-sm-1 sidebar d-flex flex-column justify-content-start align-items-center pt-3">
+            <!-- <div style="height: 80px; width: 100%;"></div> -->
+            <a class="mb-3"[routerLink]="['calender']"><fa-icon class="sideicon" [icon]="faCalendarDays"></fa-icon></a>
+            <a class="mb-3"[routerLink]="['chat']"><fa-icon class="sideicon" [icon]="faComment"></fa-icon></a>
+            <a class="mb-3"[routerLink]="['notification']"><fa-icon class="sideicon" [icon]="faBell"></fa-icon></a>
+            <a class="mb-3"[routerLink]="['directory']"><fa-icon class="sideicon" [icon]="faAddressBook"></fa-icon></a>
+            <ng-container *ngIf="isAdmin==='true'">
+                <a class="mb-3" [routerLink]="['approve']"><fa-icon class="sideicon" [icon]="faThumbsUp"></fa-icon></a>
+            </ng-container>
+        </div>
+        <div class="col-11 ps-2 pt-2 mainbar" >
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

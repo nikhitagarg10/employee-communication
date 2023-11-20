@@ -1,0 +1,45 @@
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.blue-snackbar{
+    background-color:rgb(233, 187, 244);
+    padding: 3%, 3%;
+}
+
+/* background color of the calender header */
+.fc .fc-toolbar .fc-header-toolbar{
+    background-color: white;
+    margin: 0;
+    padding: 2% 2%;
+}
+
+/* background color of the next and prev button */
+.fc .fc-button{
+    background-color: white;
+    border: none;
+}
+/* icon color of next and prev buttons */
+.fc .fc-icon-chevron-left {
+    color: lightgray;
+}
+.fc .fc-icon-chevron-right{
+    color: lightgray;
+}
+/* size of next and prev button */
+.fc .fc-button .fc-icon{
+    font-size: 2rem;
+}
+
+.fc td, .fc th {
+    border-style: none !important;
+  }
+.fc-scroller {
+    overflow-y: hidden !important;
+ }
+.fc-col-header-cell-cushion {
+    text-decoration: none !important;
+    float: right;
+}
+.fc-daygrid-day-number{
+    text-decoration: none !important;
+}

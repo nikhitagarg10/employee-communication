@@ -1,0 +1,53 @@
+.icon{
+    font-size: 200%;
+}
+.con1{
+    height: 560px;
+}
+.header{
+    border-bottom: 1px solid lightgrey;
+}
+.heading{
+    font-weight: 700;
+    color: rgb(4, 4, 50); 
+}
+.inp{
+    width: 90%;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+}
+.chatContent{
+    min-height: 380px;
+}
+.chatbtn{
+    background-color: rgb(70,180,172);
+    color: white;
+    padding: 0.5% 1%;
+    border-radius: 15px;
+}
+.sendermes{
+    display: inline-block;
+    width: auto;
+    background-color: rgb(204,108,229);
+    border-radius: 15px;
+}
+.receivermes{
+    background-color: rgb(237, 235, 235);
+    display: inline-block;
+    width: auto;
+    border-radius: 15px;
+}
+.text{
+    font-family:cursive;
+    font-size: 16px;
+}
+
+.scroll{
+    overflow-y: scroll;
+    height: 380px;
+}
+.scroll::-webkit-scrollbar {
+    width: 0px; 
+    background-color: transparent; 
+}

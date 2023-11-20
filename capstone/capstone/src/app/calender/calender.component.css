@@ -1,0 +1,46 @@
+/* .calender-box
+{
+    height: 571px;
+    max-width: 100%;
+}
+.calender{
+    background-color: beige;
+    height: 500px;
+    width: 60%;
+    border: 2px solid black;
+}
+.fc-day-header {
+    font-weight: 800;
+  } */
+
+.calenderbox{
+    width: 90%;
+    height: 500px;
+    background-color: rgb(204,108,229);
+}
+.calenderbox1{
+    position: relative;
+    width: 60%;
+    height: 500px;
+    background-color: white;
+}
+.calender{
+    width: 100%;
+    height: 430px;
+}
+.eventbtn{
+    position: absolute;
+    border: none;
+    outline: none;
+    background-color: rgb(204,108,229);
+    right: 0;
+}
+.eventtitle{
+    width: 100px !important;
+}
+.delbtn{
+    border: none;
+    outline: none;
+    background: none;
+    color: red;
+}

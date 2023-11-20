@@ -1,0 +1,34 @@
+<div mat-dialog-content >
+    <h1>Create a New Group</h1>
+    <form [formGroup]="newGroupForm">
+        <div class="d-flex justify-content-start">
+            <mat-form-field class="example-full-width me-5">
+                <mat-label>Group Name</mat-label>
+                <input matInput formControlName="group_name">
+            </mat-form-field>
+        </div>
+        <h4>Add Group Memebers</h4>
+        <table class="table" *ngFor="let e of allEmps">
+            <tbody>
+                <tr>
+                    <td><input class="ms-3 me-3"type="checkbox" id="{{e['id']}}" (change)="onCheckboxChange($event)"></td>
+                    <td>{{e["name"]}}</td>
+                    <td>{{e["email"]}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+            <mat-form-field class="example-full-width me-5" style="display:none;">
+                <mat-label>Select Employees</mat-label>
+                <input matInput formControlName="emps">
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button class="btn btn-danger me-3" mat-button (click)="onNoClick()">Back</button>
+    <button class="btn btn-success" mat-button [disabled]="!newGroupForm.valid" [mat-dialog-close] = "newGroupForm.value" >Create</button>
+</div>
+
+
+

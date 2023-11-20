@@ -1,0 +1,65 @@
+<div class="container-fluid d-flex justify-content-center align-items-center p-2 row con1">
+
+    <div class="imgCon d-flex align-items-center col-6 me-3">
+        <img class="img" src="assets/loginImage.png"/>
+    </div>
+    <div class="formCon col-6 ms-3">
+        <h1><span>Bring Your <span class="green">Work</span></span><br><span>& <span class="green">team</span> together</span></h1>
+        <form [formGroup]="signUpForm" (ngSubmit)="onSubmit(signUpForm)">
+            <div class="d-flex justify-content-between">
+                <div class="inpwid">
+                    <small class="error" *ngIf="signUpForm.controls['name'].invalid && signUpForm.controls['name'].touched">name is required</small><br>
+                    <input class="inp1 p-3 mb-2" type="text" placeholder="enter your name" formControlName="name"/><br>
+                </div>
+                <div class="inpwid">
+                    <small class="error" *ngIf="signUpForm.controls['email'].invalid && signUpForm.controls['email'].touched">email is required</small><br>
+                    <input class="inp1 p-3 mb-2" type="text" placeholder="enter your email" formControlName="email"/>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="inpwid">
+                    <small class="error" *ngIf="signUpForm.controls['password'].invalid && signUpForm.controls['password'].touched">password is required</small><br>
+                    <input class="inp1 p-3 mb-3" type="password" placeholder="enter your password" formControlName="password"/>
+                </div>
+                <div class="inpwid">
+                    <small class="error" *ngIf="signUpForm.controls['phone'].invalid && signUpForm.controls['phone'].touched">phone is required</small><br>
+                    <input class="inp1 p-3 mb-3" type="number" placeholder="enter your phone number" formControlName="phone"/>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+                <div class="inpwid mb-3">
+                    <small class="error" *ngIf="signUpForm.controls['department'].invalid && signUpForm.controls['department'].touched">department is required</small><br>
+                    <small>Select your Department</small><br>
+                    <select class="inp1 p-3" type="text" formControlName="department" [(ngModel)]="departmentValue">
+                        <option *ngFor="let depart of empDepartment| keyvalue" value={{depart.key}}>{{depart.value}}</option>
+                    </select>
+                </div>
+                <div class="inpwid mb-3">
+                    <small class="error" *ngIf="signUpForm.controls['role'].invalid && signUpForm.controls['role'].touched">role is required</small><br>
+                    <small>Select your Role</small><br>
+                    <select class="inp1 p-3" type="text" formControlName="role" [(ngModel)]="roleValue">
+                        <ng-container *ngIf="getFilteredInput2Options().length==0">
+                            <option value="none">select department first</option>
+                        </ng-container>
+                        <ng-container *ngIf="getFilteredInput2Options().length!=0">
+                            <option *ngFor="let depart of getFilteredInput2Options()" value={{depart}}>{{depart}}</option>
+                        </ng-container>
+                    </select>
+                </div>     
+            </div>
+            
+            <div class="d-flex justify-content-start align-items-center">
+                <button class="btn p-2 me-3 signinbtn" type="submit">Sign Up</button>
+                <fa-icon [ngStyle]="{color: color}" class="statusicon pe-2" [icon]="faCircle"></fa-icon>
+                <small  >Available</small>
+                <!-- <select class="statusinp" type="text" formControlName="status">
+                    <option *ngFor="let status of empStatus| keyvalue" value={{status.key}}>{{status.value}}</option>
+                </select><br> -->
+            </div>
+            
+            
+        </form>
+        <p class="mt-3 ltext">Already a user ? Please <a [routerLink]='[""]'><span class="green">Log in</span></a></p>
+    </div>
+</div>
