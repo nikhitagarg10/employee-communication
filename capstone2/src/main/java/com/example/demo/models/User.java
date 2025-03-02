@@ -1,10 +1,12 @@
 package com.example.demo.models;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.demo.enums.empDepartments;
@@ -39,8 +41,10 @@ public class User implements UserDetails {
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		return List.of(
+				new SimpleGrantedAuthority("admin_lead"),
+				new SimpleGrantedAuthority("admin_engineer")
+		);
 	}
 	@Override
 	public String getUsername() {return this.email;}

@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
 
 //import java.lang.reflect.Array;
-import java.util.List;
+import java.util.*;
 
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 //import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,7 +50,7 @@ public class AuthController
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) 
     {
     	try {
-    		this.doAuthenticate(request.getEmail(), request.getPassword());
+    		this.doAuthenticate(request.getEmail(), request.getPassword(), request.getRole());
         	
         	UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
             String token = this.helper.generateToken(userDetails);
@@ -56,6 +58,7 @@ public class AuthController
             JwtResponse response = JwtResponse.builder()
             	    .jwtToken(token)            	    
             	    .username(userDetails.getUsername())
+                    .loginResult(userDetails.getAuthorities().toString())
             	    .build();
             
         	return new ResponseEntity<>(response, HttpStatus.OK);
@@ -72,9 +75,12 @@ public class AuthController
     }
     
     
-    private void doAuthenticate(String email, String password) 
+    private void doAuthenticate(String email, String password, String role)
     {
-    	UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
+        UsernamePasswordAuthenticationToken authentication = role.equals("admin")
+                ? new UsernamePasswordAuthenticationToken(email, password, authorities)
+                : new UsernamePasswordAuthenticationToken(email, password);
     	try {
     		manager.authenticate(authentication);
     	}catch(BadCredentialsException e) {
