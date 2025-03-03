@@ -5,6 +5,7 @@ import java.util.*;
 
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.JwtResponse;
 import com.example.demo.models.User;
-//import com.example.demo.repository.UserRepository;
 import com.example.demo.models.JwtRequest;
 import com.example.demo.security.JwtHelper;
 import com.example.demo.services.UserService;
 
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class AuthController 
 {
 	@Autowired
@@ -50,6 +51,7 @@ public class AuthController
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) 
     {
     	try {
+            log.info("login process is starting. JWT request received: {}", request);
     		this.doAuthenticate(request.getEmail(), request.getPassword(), request.getRole());
         	
         	UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
@@ -96,6 +98,7 @@ public class AuthController
     @PostMapping("/createuser")
     public User creatUser(@RequestBody User user)
     {
+        log.info("creating a new user. User body received: {}", user);
     	return userService.createUser(user);
     }
     

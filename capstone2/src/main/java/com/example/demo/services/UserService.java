@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 //import java.util.UUID;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
 
 @Service
+@Slf4j
 public class UserService 
 {
 	@Autowired
@@ -42,19 +44,24 @@ public class UserService
 	
 	//add a new emp to the databse
 	public User createUser(User user){
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		return userRepository.save(user);
-	}
+		try{
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			log.info("saving the user in the database: {}", user);
+			return userRepository.save(user);
+		}
+		catch (Exception e){
+            log.error("unable to create a new user: {}", e.getMessage());
+			throw new RuntimeException("An unexpected error occurred.", e);
+		}
+    }
 	
 	//fetch emp info from its id
-	public User getEmpById(String empId)
-	{
+	public User getEmpById(String empId) {
 		return this.userRepository.findById(empId).get();
 	}
 	
 	//fetch the current logged in user
-	public User currentUser(Principal principal)
-	{
+	public User currentUser(Principal principal) {
 		String userEmail = principal.getName();
 		return this.userRepository.findByEmail(userEmail).get();
 	}
