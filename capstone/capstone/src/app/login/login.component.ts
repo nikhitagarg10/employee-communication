@@ -35,34 +35,46 @@ export class LoginComponent {
   error = false;
   onSubmit(loginFormVal: FormGroup)
   {
-    if(this.loginForm.valid)
-    {
+    if(this.loginForm.valid){
       this.loginEmp = loginFormVal.value;
-      this.loginService.LoginEmp(this.loginEmp).pipe(
-        switchMap((data) => {
+      this.loginService.LoginEmp(this.loginEmp).subscribe({
+        next: (data) => {
+          console.log("data after user clicked login button: "+ data.jwtToken + " "+ data.username+ " "+ data.result);
           localStorage.setItem('access_token', data.jwtToken);
-          return this.dashboardService.getCurrentUser();
-        })
-      ).subscribe({
-        next: (data)=> {
-          console.log(data.department)
-          if(data.department === 'admin'){
-            console.log("ok");
-            localStorage.setItem("isAdmin", "true");
-          }
-          else{
-            localStorage.setItem("isAdmin", "false");
-          }
+          // return this.dashboardService.getCurrentUser();
         },
-        error: (err) => {
-          console.log(err);
-          this.error = true;
-        },
-        complete: () => {
-          this.router.navigate(['dashboard/calender']);
-        }
+        error: (err) => { console.error(err); },
+        complete: () => {this.router.navigate(['dashboard/calender']);}
       });
     }
+    // if(this.loginForm.valid)
+    // {
+    //   this.loginEmp = loginFormVal.value;
+    //   this.loginService.LoginEmp(this.loginEmp).pipe(
+    //     switchMap((data) => {
+    //       localStorage.setItem('access_token', data.jwtToken);
+    //       return this.dashboardService.getCurrentUser();
+    //     })
+    //   ).subscribe({
+    //     next: (data)=> {
+    //       console.log(data.department)
+    //       if(data.department === 'admin'){
+    //         console.log("ok");
+    //         localStorage.setItem("isAdmin", "true");
+    //       }
+    //       else{
+    //         localStorage.setItem("isAdmin", "false");
+    //       }
+    //     },
+    //     error: (err) => {
+    //       console.log(err);
+    //       this.error = true;
+    //     },
+    //     complete: () => {
+    //       this.router.navigate(['dashboard/calender']);
+    //     }
+    //   });
+    // }
     else{
       console.error("login form is invalid");
     }

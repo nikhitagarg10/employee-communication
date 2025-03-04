@@ -16,7 +16,6 @@ public class CorsConfig implements WebMvcConfigurer{ //
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				System.out.println("called");
 				registry.addMapping("/**")
 				.allowedOrigins("*")
 				.allowedHeaders("*")

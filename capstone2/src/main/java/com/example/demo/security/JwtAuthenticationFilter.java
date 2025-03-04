@@ -34,10 +34,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException 
 	{
+        if(request.getRequestURI().startsWith("/auth/createuser")){
+            filterChain.doFilter(request, response);
+            return;
+        }
 		String requestHeader = request.getHeader("Authorization");
-		System.out.println(requestHeader);
-        //Bearer 2352345235sdfrsfgsdfsdf
-        logger.info(" Header :  {}", requestHeader);
+        logger.info(" Header value when we hit {}:  {}", request.getRequestURI(), requestHeader);
         String username = null;
         String token = null;
         
@@ -59,7 +61,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
                 e.printStackTrace();
             }
         } else {
-        	System.out.println(requestHeader);
             logger.info("Invalid Header Value !! ");
         }
 

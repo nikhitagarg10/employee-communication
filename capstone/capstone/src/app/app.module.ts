@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from 'src/material/material.module';
 import { SharedModule } from 'src/shared/shared.module';
 
@@ -19,11 +19,10 @@ import { ChatComponent } from './chat/chat.component';
 import { ContactComponent } from './contact/contact.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
 import { DirectoryComponent } from './directory/directory.component';
 import { NotificationComponent } from './notification/notification.component';
 import { ApprovalComponent } from './approval/approval.component';
+import { AuthInterceptorService } from './auth/authInterceptor';
 
 
 @NgModule({
@@ -53,7 +52,11 @@ import { ApprovalComponent } from './approval/approval.component';
     SharedModule,
     FullCalendarModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
