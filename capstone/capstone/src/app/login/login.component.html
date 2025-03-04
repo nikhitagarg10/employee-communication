@@ -19,11 +19,13 @@
             <input class="inp p-3 mb-1" type="text" name="email" placeholder="enter your email" formControlName="email" required><br>
 
             <small class="error" *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched">password is required</small><br>
-            <input class="inp p-3 mb-4" type="password" placeholder="enter your password" formControlName="password" required><br>
-
+            <div class="position-relative">
+                <input [type]="showPassword ? 'text' : 'password'" class="inp p-3 mb-4" placeholder="Enter your password" formControlName="password" required/>
+                <fa-icon [icon]="showPassword ? faEye : faEyeSlash" (click)="togglePassword()" style="cursor: pointer;"class="eyeIcon" ></fa-icon>
+            </div>
             <button class="btn p-2 loginbtn"type="submit">Login</button>
         </form>
-        <p class="mt-3 ltext">Not a user ? Please <a [routerLink]='["signup"]'><span class="green">Sign in</span></a></p>
+        <p class="mt-3 ltext">Not a user ? Please <a [routerLink]='["signup"]'><span class="green">Sign up</span></a></p>
     </div>
     
 </div>

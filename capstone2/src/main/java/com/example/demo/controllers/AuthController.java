@@ -40,23 +40,21 @@ public class AuthController
     @Autowired
     private AuthenticationManager manager;
     @Autowired
-    private JwtHelper helper;
+    private JwtHelper jwtHelper;
     @Autowired
     private UserService userService;
-    
-//    private Logger logger = LoggerFactory.getLogger(AuthController.class);
-    
-    
+
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) 
     {
     	try {
             log.info("login process is starting. JWT request received: {}", request);
-    		this.doAuthenticate(request.getEmail(), request.getPassword(), request.getRole());
-        	
+            String userRole = userService.getRoleDuringLogin(request.getEmail()).toString();
+            this.doAuthenticate(request.getEmail(), request.getPassword(), userRole);
+
         	UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
-            String token = this.helper.generateToken(userDetails);
-//            System.out.println(userDetails.get)
+            String token = jwtHelper.generateToken(userDetails);
+            System.out.println("nikhita is checking the token: "+ token);
             JwtResponse response = JwtResponse.builder()
             	    .jwtToken(token)            	    
             	    .username(userDetails.getUsername())
@@ -66,7 +64,6 @@ public class AuthController
         	return new ResponseEntity<>(response, HttpStatus.OK);
     	} 
     	catch (BadCredentialsException e) {
-            // return error response if authentication fails
     		JwtResponse badResponse = JwtResponse.builder()
             	    .jwtToken("no token")
             	    .username("no user")
@@ -77,10 +74,9 @@ public class AuthController
     }
     
     
-    private void doAuthenticate(String email, String password, String role)
-    {
+    private void doAuthenticate(String email, String password, String role) {
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
-        UsernamePasswordAuthenticationToken authentication = role.equals("admin")
+        UsernamePasswordAuthenticationToken authentication = role.contains("^admin.*")
                 ? new UsernamePasswordAuthenticationToken(email, password, authorities)
                 : new UsernamePasswordAuthenticationToken(email, password);
     	try {
@@ -96,8 +92,7 @@ public class AuthController
     }
     
     @PostMapping("/createuser")
-    public User creatUser(@RequestBody User user)
-    {
+    public User creatUser(@RequestBody User user) {
         log.info("creating a new user. User body received: {}", user);
     	return userService.createUser(user);
     }

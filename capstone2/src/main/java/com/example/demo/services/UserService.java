@@ -3,8 +3,10 @@ package com.example.demo.services;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 //import java.util.UUID;
 
+import com.example.demo.enums.empRole;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +25,14 @@ public class UserService
 	private UserRepository userRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	public empRole getRoleDuringLogin(String emailId){
+		Optional<User> optionalData = this.userRepository.findByEmail(emailId);
+		if(optionalData.isEmpty()){
+			throw new RuntimeException("email by which user is trying to login is not present.");
+		}
+		return optionalData.get().getRole();
+	}
 	
 	//get all emps from the database
 	public List<EmpResponse> getUsers(){
@@ -67,8 +77,7 @@ public class UserService
 	}
 	
 	//pasword change
-	public void passwordChange(String empId, String newPassword, String oldPassword)
-	{
+	public void passwordChange(String empId, String newPassword, String oldPassword) {
 		User user = this.userRepository.findById(empId).get();
 		String dataPassword = user.getPassword();
 		String result = "";

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SignupService } from 'src/services/signup.service';
 import { SignUpInterface, empDepartment, empStatus, empRole, statusColor } from './signUpInterface';
 import { Router } from '@angular/router';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -19,7 +19,10 @@ export class SignupComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.color = statusColor.Available; 
   }
-
+  showPassword = false;
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
   phoneRegex = /^[0-9]{10}$/;
 
   signUpForm = this.fb.group({
@@ -82,4 +85,6 @@ export class SignupComponent implements AfterViewInit {
 
   //icons
   faCircle = faCircle;
+  faEyeSlash = faEyeSlash;
+  faEye = faEye;
 }

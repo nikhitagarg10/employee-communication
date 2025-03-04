@@ -5,6 +5,8 @@ import { LoginInterface } from './loginInterface';
 import { Router } from '@angular/router';
 import { DashboardService } from 'src/services/dashboard.service';
 import { switchMap } from 'rxjs';
+import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-login',
@@ -12,8 +14,17 @@ import { switchMap } from 'rxjs';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private fb: FormBuilder, private ss: LoginService, 
-              private router: Router, private ds: DashboardService){}
+  constructor(private fb: FormBuilder, private loginService: LoginService, 
+              private router: Router, private dashboardService: DashboardService){}
+
+  //icons
+  faEye= faEye;
+  faEyeSlash = faEyeSlash;
+  showPassword = false;
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -27,11 +38,10 @@ export class LoginComponent {
     if(this.loginForm.valid)
     {
       this.loginEmp = loginFormVal.value;
-      this.ss.LoginEmp(this.loginEmp).pipe(
+      this.loginService.LoginEmp(this.loginEmp).pipe(
         switchMap((data) => {
-          console.log(data);
           localStorage.setItem('access_token', data.jwtToken);
-          return this.ds.getCurrentUser();
+          return this.dashboardService.getCurrentUser();
         })
       ).subscribe({
         next: (data)=> {
@@ -52,33 +62,6 @@ export class LoginComponent {
           this.router.navigate(['dashboard/calender']);
         }
       });
-      // this.ss.LoginEmp(this.loginEmp).subscribe({
-      //   next: (data) => {
-      //     console.log(data);
-      //     localStorage.setItem('access_token', data.jwtToken);
-      //   },
-      //   error: (err) => {
-      //     this.error = true;
-      //   },
-      //   complete: () => {
-      //       this.ds.getCurrentUser().subscribe({
-      //         next: (data)=> {
-      //           console.log(data.department)
-      //           if(data.department === 'admin'){
-      //             console.log("ok");
-      //             localStorage.setItem("isAdmin", "true");
-      //           }
-      //           else{
-      //             localStorage.setItem("isAdmin", "false");
-      //           }
-      //         },
-      //         error: (err) => {console.log(err);},
-      //         complete: () => {
-      //           this.router.navigate(['dashboard/calender']);
-      //         }
-      //       })
-      //   }
-      // });
     }
     else{
       console.error("login form is invalid");

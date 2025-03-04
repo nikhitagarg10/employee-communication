@@ -50,3 +50,10 @@ h1{
     border: none;
     background-color:rgb(233, 187, 244);
 }
+.eyeIcon{
+    position: absolute;
+    transform:translate(-50%,-50%); 
+    left: 65%;
+    top: 35%;
+    color: grey;
+}

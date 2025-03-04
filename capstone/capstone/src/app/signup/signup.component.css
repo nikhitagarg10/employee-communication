@@ -50,3 +50,8 @@ h1{
 .error{
     color: rgb(134, 11, 11);
 }
+.eyeIcon{
+    position: absolute;
+    transform:translate(-160%, 80%); 
+    color: grey;
+}

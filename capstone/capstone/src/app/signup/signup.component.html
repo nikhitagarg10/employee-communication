@@ -19,7 +19,8 @@
             <div class="d-flex justify-content-between">
                 <div class="inpwid">
                     <small class="error" *ngIf="signUpForm.controls['password'].invalid && signUpForm.controls['password'].touched">password is required</small><br>
-                    <input class="inp1 p-3 mb-3" type="password" placeholder="enter your password" formControlName="password"/>
+                    <input class="inp1 p-3 mb-3" [type]="showPassword ? 'text' : 'password'" placeholder="enter your password" formControlName="password"/>
+                    <fa-icon [icon]="showPassword ? faEye : faEyeSlash" (click)="togglePassword()" style="cursor: pointer;"class="eyeIcon" ></fa-icon>
                 </div>
                 <div class="inpwid">
                     <small class="error" *ngIf="signUpForm.controls['phone'].invalid && signUpForm.controls['phone'].touched">phone is required</small><br>
@@ -53,9 +54,6 @@
                 <button class="btn p-2 me-3 signinbtn" type="submit">Sign Up</button>
                 <fa-icon [ngStyle]="{color: color}" class="statusicon pe-2" [icon]="faCircle"></fa-icon>
                 <small  >Available</small>
-                <!-- <select class="statusinp" type="text" formControlName="status">
-                    <option *ngFor="let status of empStatus| keyvalue" value={{status.key}}>{{status.value}}</option>
-                </select><br> -->
             </div>
             
             
