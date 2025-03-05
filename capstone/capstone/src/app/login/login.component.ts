@@ -41,7 +41,6 @@ export class LoginComponent {
         next: (data) => {
           console.log("data after user clicked login button: "+ data.jwtToken + " "+ data.username+ " "+ data.result);
           localStorage.setItem('access_token', data.jwtToken);
-          // return this.dashboardService.getCurrentUser();
         },
         error: (err) => { console.error(err); },
         complete: () => {this.router.navigate(['dashboard/calender']);}
