@@ -85,7 +85,7 @@ export class CalenderComponent implements OnInit {
     const dateToGo = new Date(args.date); 
     console.log("going to date: "+ dateToGo);
     calendarApi.gotoDate(dateToGo);
-    calendarApi.
+  };
 
 
   calendarBig: CalendarOptions = {
