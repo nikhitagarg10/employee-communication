@@ -7,25 +7,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 /* background color of the calender header */
-.fc .fc-toolbar .fc-header-toolbar{
+/* .fc .fc-toolbar .fc-header-toolbar{
     background-color: white;
     margin: 0;
     padding: 2% 2%;
 }
 
-/* background color of the next and prev button */
 .fc .fc-button{
     background-color: white;
     border: none;
 }
-/* icon color of next and prev buttons */
 .fc .fc-icon-chevron-left {
     color: lightgray;
 }
 .fc .fc-icon-chevron-right{
     color: lightgray;
 }
-/* size of next and prev button */
 .fc .fc-button .fc-icon{
     font-size: 2rem;
 }
@@ -42,4 +39,4 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 .fc-daygrid-day-number{
     text-decoration: none !important;
-}
+} */

@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 })
 export class DashboardService {
   private dashBoardUrl: string;
-  private jwtToken = localStorage.getItem("access_token");
+  // private jwtToken = localStorage.getItem("access_token");
   private headers: any;
   
   constructor(private http: HttpClient) {
@@ -19,13 +19,13 @@ export class DashboardService {
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.jwtToken}`
+      // 'Authorization': `Bearer ${this.jwtToken}`
     })
   };
   private httpOptions1 = {
     headers: new HttpHeaders({
       'enctype': 'multipart/form-data',
-      'Authorization': `Bearer ${this.jwtToken}`
+      // 'Authorization': `Bearer ${this.jwtToken}`
     })
   };
   
@@ -42,7 +42,6 @@ export class DashboardService {
 
   //sending a get request to get the current employee logged in
   public getCurrentUser(){
-    console.log(this.httpOptions);
     return this.http.get<any>(this.dashBoardUrl+'/currentuser', this.httpOptions);
   }
 

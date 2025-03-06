@@ -12,18 +12,20 @@ import multiMonthPlugin from '@fullcalendar/multimonth';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
+import bootstrap5Plugin from '@fullcalendar/bootstrap5';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendereventComponent } from 'src/shared/calenderevent/calenderevent.component';
 
 
 @Component({
   selector: 'app-calender',
-  styleUrls: ['./calender.component.css'],
+  styleUrls: ['./calender.component.css', './calendar-styles.css'],
   templateUrl: './calender.component.html',
 })
 export class CalenderComponent implements OnInit {
 
-  @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
+  @ViewChild('calendarsmall') calendarComponentSmall!: FullCalendarComponent;
+  @ViewChild('calendarbig') calendarComponentBig!: FullCalendarComponent;
 
   constructor(private fb: FormBuilder, private ss: CalenderService, 
             public dialog: MatDialog, private ds: DashboardService ){}
@@ -42,47 +44,63 @@ export class CalenderComponent implements OnInit {
       })     
   }
 
+
   calendarSmall: CalendarOptions = {
     initialView: 'dayGridMonth',
-    plugins: [dayGridPlugin, interactionPlugin],
+    themeSystem: 'bootstrap5',
+    plugins: [dayGridPlugin, interactionPlugin, bootstrap5Plugin],
     weekends: true,
-    dateClick: this.handleDateClick.bind(this),
-    headerToolbar: {
-      left: 'prev',
-      center: 'title',
-      right: 'next'
+    selectable: true,
+    dayHeaderFormat: { weekday: 'narrow' },
+    dateClick: this.selectDate.bind(this),
+    // dateClick: function(info) {
+    //   // alert('Clicked on: ' + info.dateStr);
+    //   // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+    //   // alert('Current view: ' + info.view.type);
+    //   info.dayEl.style.backgroundColor = 'rgb(144, 248, 241)';
+    //   this.
+    // },
+    buttonIcons: {
+      prev: 'caret-left-fill',
+      next: 'caret-right-fill'
     },
+    headerToolbar: {
+      left: 'title',
+      center: "",
+      right: 'prev, next'
+    }
   };
 
-  // calendarBigYear: CalendarOptions = {
-  //   initialView: 'multiMonthYear',
-  //   plugins: [multiMonthPlugin, interactionPlugin],
-  //   dateClick: this.handleDateClick.bind(this),
-  //   // headerToolbar: {
-  //   //   left: 'prev',
-  //   //   center: 'title',
-  //   //   right: 'next'
-  //   // },
-  // };
-  calendarOptions1: CalendarOptions = {
-    initialView: 'dayGridMonth',
-    plugins: [dayGridPlugin, interactionPlugin, multiMonthPlugin, listPlugin, interactionPlugin],
-    weekends: true,
-    dateClick: this.handleDateClick.bind(this),
-    headerToolbar: {
-      left: 'prev',
-      center: 'title',
-      right: 'next'
-    },
-  };
 
-  calendarOptions: CalendarOptions = {
+  lastClickedDate: HTMLElement | null = null;
+  selectDate(args:any){
+    if(this.lastClickedDate != null){
+      this.lastClickedDate.style.backgroundColor = ""; 
+    }
+    args.dayEl.style.backgroundColor = 'rgb(185, 255, 250)';
+    args.dayEl.style.borderRadius = '50%';
+    this.lastClickedDate = args.dayEl;
+    
+    const calendarApi = this.calendarComponentBig.getApi();
+    const dateToGo = new Date(args.date); 
+    console.log("going to date: "+ dateToGo);
+    calendarApi.gotoDate(dateToGo);
+    calendarApi.
+
+
+  calendarBig: CalendarOptions = {
     plugins: [dayGridPlugin, timeGridPlugin, multiMonthPlugin, listPlugin, interactionPlugin], 
     initialView: 'dayGridMonth',
     dateClick: this.handleDateClick.bind(this),
     headerToolbar: {
       center: 'dayGridMonth,dayGridWeek,multiMonthYear,timeGridWeek,listWeek' 
     },
+    views: {
+      multiMonthFourMonth: {
+        type: 'multiMonth',
+        duration: { months: 4 }
+      }
+    }
     // views: {
     //   timeGridFourDay: {
     //     type: 'timeGrid',
@@ -92,40 +110,6 @@ export class CalenderComponent implements OnInit {
     // }
   };
 
-  // calendarBigDay: CalendarOptions = {
-  //   plugins: [dayGridPlugin, interactionPlugin],
-  //   initialView: 'dayGridWeek',
-  //   headerToolbar: {
-  //     left: 'prev,next',
-  //     center: 'title',
-  //     right: 'dayGridWeek,dayGridDay' 
-  //   }
-  // };
-
-  // selectedView: string = 'Month'; 
-  // currentCalenderView: String = "";
-  // selectView(view: string) {
-  //   this.selectedView = view; 
-  //   console.error("selected calender view: "+ this.selectedView);
-  //   if(view == "Day"){
-  //     // this.currentCalenderView = "dayGridWeek";
-  //     this.switchView("dayGridWeek");
-  //   }
-  //   else if (view == "Year"){
-  //     // this.currentCalenderView = "multiMonthYear";
-  //     this.switchView("multiMonthYear");
-  //   }
-  //   else if (view == "Month"){
-  //     this.currentCalenderView = "dayGridMonth";
-  //     this.switchView("dayGridMonth");
-  //   }
-  // }
-
-  // switchView(view: string) {
-  //   const calendarApi = this.calendarComponent.getApi();
-  //   calendarApi.changeView(view); 
-  // }
-
   opendialog(): void {
     const dialogRef = this.dialog.open(CalendereventComponent, {
       data: this.currId,
@@ -134,7 +118,7 @@ export class CalenderComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result){
         console.log(result);
-        this.calendarComponent.getApi().addEvent(result);
+        // this.calendarComponent.getApi().addEvent(result);
         this.ss.addEvent(result).subscribe({
           next:(data)=>{console.log(data)},
           error:(err)=>{console.log(err);},
@@ -155,14 +139,14 @@ export class CalenderComponent implements OnInit {
       error:(err)=>{console.log(err);},
       complete:()=>{
         console.log(this.allEvents);
-        this.calendarComponent.getApi().removeAllEvents();
+        // this.calendarComponent.getApi().removeAllEvents();
         this.allEvents.forEach((e)=>{
           const eventdata = {
             "title": e.title,
             "start": new Date(e.start),
             "end": new Date(e.end),
           }
-          this.calendarComponent.getApi().addEvent(eventdata);
+          // this.calendarComponent.getApi().addEvent(eventdata);
 
           e.start = e.start.substring(0, e.start.indexOf('T'));
           e.end = e.end.substring(0, e.end.indexOf('T'));
